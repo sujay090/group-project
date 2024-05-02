@@ -90,8 +90,7 @@ function updateOrder() {
         </div>
       `;
     }
-
-    calCulateAmount(item.Price);
+    calCulateAmount();
   });
 
   order.innerHTML = flag;
@@ -113,6 +112,8 @@ function setupEventListeners() {
         button.innerHTML = "Remove item <i class='fas fa-minus-circle'></i>";
         button.classList.add("remove-btn");
       } else {
+        value--;
+        console.log(value);
         button.innerHTML = "Add item <i class='fas fa-plus-circle'></i>";
         button.classList.remove("remove-btn");
       }
@@ -131,32 +132,47 @@ function calCulateAmount() {
   totalAmount.innerHTML = `$ ${total}.00`;
 }
 
-
-
+var value = 0;
+function update() {
+  laundryData.forEach((item) => {
+    if (item.selected === true) {
+      value++;
+      fromeValidation();
+    }
+  });
+}
 function fromeValidation() {
   const fullName = document.querySelector(".fullName").value;
   const email = document.querySelector(".email").value;
   const number = document.querySelector(".number").value;
-  const lastmasseg = document.querySelector(".last-msg");
-  if (fullName && email && number ) {
-    lastmasseg.textContent = "Your order has been placed successfully.";
-    lastmasseg.style.color="green";
-    document.querySelector(".fullName").value = "";
-    document.querySelector(".email").value = "";
-    document.querySelector(".number").value = "";
+  if (fullName != "" && email != "" && number != "") {
+    if (value >= 1) {
+      const lastmasseg = document.querySelector(".last-msg");
+      lastmasseg.textContent = "Your order has been placed successfully.";
+      lastmasseg.style.color = "green";
+      document.querySelector(".fullName").value = "";
+      document.querySelector(".email").value = "";
+      document.querySelector(".number").value = "";
+      console.log(value, "suja");
+    } else {
+      // const lastmasseg = document.querySelector(".last-msg");
+
+      // lastmasseg.textContent = "Please fill all the fields.";
+      // lastmasseg.style.color = "red";
+      alert(value);
+    }
   } else {
+    const lastmasseg = document.querySelector(".last-msg");
+
     lastmasseg.textContent = "Please fill all the fields.";
-    lastmasseg.style.color="red";
+    lastmasseg.style.color = "red";
+    alert(value);
   }
 }
-const booknowbtn=document.querySelector(".book-now-btn");
-booknowbtn.addEventListener("click",()=>{
-  
-  fromeValidation();
-})
+const booknowbtn = document.querySelector(".book-now-btn");
+booknowbtn.addEventListener("click", () => {
+  update();
+});
 
-
-
-fromeValidation();
 renderLaundryItems();
 setupEventListeners();
