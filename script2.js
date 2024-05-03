@@ -137,7 +137,6 @@ function update() {
   laundryData.forEach((item) => {
     if (item.selected === true) {
       value++;
-      fromeValidation();
     }
   });
 }
@@ -153,25 +152,23 @@ function fromeValidation() {
       document.querySelector(".fullName").value = "";
       document.querySelector(".email").value = "";
       document.querySelector(".number").value = "";
-      console.log(value, "suja");
     } else {
-      // const lastmasseg = document.querySelector(".last-msg");
-
-      // lastmasseg.textContent = "Please fill all the fields.";
-      // lastmasseg.style.color = "red";
-      alert(value);
+      const lastmasseg = document.querySelector(".last-msg");
+      lastmasseg.textContent = "Please fill all the fields.";
+      lastmasseg.style.color = "red";
     }
   } else {
     const lastmasseg = document.querySelector(".last-msg");
-
     lastmasseg.textContent = "Please fill all the fields.";
     lastmasseg.style.color = "red";
-    alert(value);
+
   }
 }
 const booknowbtn = document.querySelector(".book-now-btn");
 booknowbtn.addEventListener("click", () => {
   update();
+  fromeValidation();
+
 });
 
 renderLaundryItems();
